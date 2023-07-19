@@ -40,6 +40,7 @@ class PostController extends Controller
         }
 
 
+
          Post::create([
             'title' => $request ->title,
             'short_content' => $request -> short_content,
@@ -71,7 +72,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit')->with('post',$post);
+        return view('posts.edit')->with(['post' => $post]);
     }
 
     /**
@@ -89,7 +90,7 @@ class PostController extends Controller
 
         }
 
-        $post -> update([
+        $post->update([
 
             'title' => $request ->title,
             'short_content' => $request -> short_content,

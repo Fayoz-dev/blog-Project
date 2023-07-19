@@ -3,9 +3,9 @@
     <x-slot:title>
         Blog
     </x-slot:title>
-    
+
         <x-page-header>
-    
+
             Blog
         </x-page-header>
 
