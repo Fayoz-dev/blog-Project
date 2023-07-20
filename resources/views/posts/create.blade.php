@@ -3,9 +3,9 @@
     <x-slot:title>
         Blog Qo'shish
     </x-slot:title>
-    
+
         <x-page-header>
-    
+
             Blog Qo'shish
         </x-page-header>
 
@@ -15,9 +15,9 @@
             {{-- <div class="row align-items-end mb-4"> --}}
                 <div class="col-lg-6">
                     <h6 class="text-secondary font-weight-semi-bold text-uppercase mb-3">Uz.Hunter</h6>
-                    
+
                 </div>
-                
+
             </div>
             <div class="row">
                 <div class="col-lg-7 mb-5 mb-lg-0">
@@ -31,9 +31,22 @@
                                     @error('title')
                                     <p class="help-block text-danger">{{ $message }}</p>
                                     @enderror
-                                    
+
                                 </div>
-                                
+
+                                <div class="col-sm-6 control-group">
+                                    <input type="text" class="form-control p-4" name="category" value="{{ old('title') }}" placeholder="Kategoriya"/>
+                                    @error('title')
+                                    <p class="help-block text-danger">{{ $message }}</p>
+                                    @enderror
+                                    <select name="category_id">
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
                             </div>
 
                             <div class="control-group mt-2">
@@ -60,7 +73,7 @@
                         </form>
                     </div>
                 </div>
-{{--                 
+{{--
             </div> --}}
         </div>
     </div>
