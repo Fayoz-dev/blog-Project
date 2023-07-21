@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(6);
+        $posts = Post::latest()->paginate(6);
 
         return view('posts.index')->with('posts', $posts);
     }
@@ -26,7 +27,10 @@ class PostController extends Controller
     public function create()
     {
 
-        return view('posts.create')->with(['categories' => Category::all(),]);
+        return view('posts.create')->with([
+            'categories' => Category::all(),
+            'tags' => Tag::all(),
+            ]);
     }
 
     /**
@@ -43,7 +47,7 @@ class PostController extends Controller
 
 
 
-         Post::create([
+         $post = Post::create([
              'user_id' => 1,
              'category_id' => $request -> category_id,
             'title' => $request ->title,
@@ -53,6 +57,11 @@ class PostController extends Controller
 
         ]);
 
+        if (isset($request->tags)){
+            foreach($request->tags as $tag){
+                $post->tags()->attach($tag);
+            }
+        }
 
 
         return redirect()->route('posts.index');
@@ -68,7 +77,8 @@ class PostController extends Controller
 
             'post' => $post ,
             'categories' => Category::all(),
-            'resent_posts' => Post::latest()->get()->except($post->id)->take(4)
+            'resent_posts' => Post::latest()->get()->except($post->id)->take(4),
+            'tags' => Tag::all(),
         ]);
     }
 
@@ -103,6 +113,8 @@ class PostController extends Controller
             'photo' => $path ?? $post->photo,
 
         ]);
+
+
 
         return redirect()->route('posts.show',['post' => $post -> id]);
     }

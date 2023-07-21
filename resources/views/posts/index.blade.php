@@ -31,11 +31,12 @@
                             <small class="text-white text-uppercase">Jan</small>
                         </div>
                     </div>
+                        @foreach($post->tags as $tag)
                     <div class="d-flex mb-2">
-                        <a class="text-secondary text-uppercase font-weight-medium" href="">Admin</a>
+                        <a class="text-secondary text-uppercase font-weight-medium" href="">{{$tag->name}}</a>
                         <span class="text-primary px-2">|</span>
-                        <a class="text-secondary text-uppercase font-weight-medium" href="">Cleaning</a>
                     </div>
+                        @endforeach
                         <div class="d-flex mb-2">
                             <a class="text-danger text-uppercase font-weight-medium" href="">{{$post->category->name}}</a>
 
