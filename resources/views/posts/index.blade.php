@@ -36,6 +36,7 @@
                         <a class="text-secondary text-uppercase font-weight-medium" href="">{{$tag->name}}</a>
                         <span class="text-primary px-2">|</span>
                     </div>
+
                         @endforeach
                         <div class="d-flex mb-2">
                             <a class="text-danger text-uppercase font-weight-medium" href="">{{$post->category->name}}</a>

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PageController::class, 'main']);
+Route::get('/', [PageController::class, 'main'])->name('main');
 Route::get('about',[PageController::class, 'about'])->name('about');
 Route::get('services',[PageController::class, 'services'])->name('services');
 Route::get('projects',[PageController::class, 'projects'])->name('projects');
@@ -33,7 +33,15 @@ Route::get('contact',[PageController::class, 'contact'])->name('contact');
 
  //Route::resource('posts', PostController::class);
 
- Route::resources([
+ Route::get('login', [\App\Http\Controllers\AuthController::class,'login'])->name('login');
+ Route::post('authenticate',[\App\Http\Controllers\AuthController::class, 'authenticate'])->name('authenticate');
+ Route::post('logout',[\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+ Route::get('register', [\App\Http\Controllers\AuthController::class,'register'])->name('register');
+ Route::post('register', [\App\Http\Controllers\AuthController::class,'register_store'])->name('register.store');
+
+
+Route::resources([
      'posts' => PostController::class,
      'comments' => CommentController::class,
+
  ]);

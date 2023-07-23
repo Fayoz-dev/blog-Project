@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this -> middleware('auth') -> except(['index','show']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +23,11 @@ class PostController extends Controller
     {
         $posts = Post::latest()->paginate(6);
 
-        return view('posts.index')->with('posts', $posts);
+        return view('posts.index')->with([
+            'posts' => Post::latest()->paginate(6),
+            'tags' => Tag::all(),
+
+        ]);
     }
 
     /**
