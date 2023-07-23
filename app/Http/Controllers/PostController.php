@@ -8,12 +8,14 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
     public function __construct()
     {
         $this -> middleware('auth') -> except(['index','show']);
+        $this -> authorizeResource(Post::class,'post');
     }
 
     /**
@@ -36,6 +38,7 @@ class PostController extends Controller
     public function create()
     {
 
+
         return view('posts.create')->with([
             'categories' => Category::all(),
             'tags' => Tag::all(),
@@ -57,12 +60,12 @@ class PostController extends Controller
 
 
          $post = Post::create([
-             'user_id' => 1,
+             'user_id' => auth()->id(),
              'category_id' => $request -> category_id,
-            'title' => $request ->title,
-            'short_content' => $request -> short_content,
-            'content' => $request -> content,
-            'photo' => $path ?? null,
+             'title' => $request ->title,
+             'short_content' => $request -> short_content,
+             'content' => $request -> content,
+             'photo' => $path ?? null,
 
         ]);
 
@@ -96,6 +99,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+
         return view('posts.edit')->with(['post' => $post]);
     }
 
@@ -104,6 +108,8 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
+
+
         if($request -> hasFile('photo'))
         {
             if(isset($post -> photo)){
@@ -133,6 +139,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+
         if(isset($post -> photo)){
             Storage::delete($post->photo);
         }

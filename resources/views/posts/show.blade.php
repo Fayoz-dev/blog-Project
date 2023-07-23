@@ -18,6 +18,7 @@
                 <div class="col-lg-8">
                     <div class="mb-5">
                         @auth()
+                            @canany(['update','delete'], $post)
                         <div class="row mb-4">
                             <a href="{{route('posts.edit', ['post'=>$post -> id])}}" class="btn btn-stn-secondary mr-2">O'zgartirish</a>
                             <form action="{{route('posts.destroy', ['post' => $post -> id])}}" method="POST"
@@ -27,6 +28,7 @@
                                 <button type="submit" class="btn btn--sm btn-outline-danger">O'chirish</button>
                             </form>
                         </div>
+                            @endcanany
                         @endauth
                         <div class="d-flex mb-2">
                             <a class="text-secondary text-uppercase font-weight-medium" href="">Admin</a>
@@ -106,7 +108,7 @@
                 <div class="col-lg-4 mt-5 mt-lg-0">
                     <div class="d-flex flex-column text-center bg-secondary rounded mb-5 py-5 px-4">
                         <img src="/img/user.jpg" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
-                        <h3 class="text-white mb-3">{{auth()->user()->name}}</h3>
+                        <h3 class="text-white mb-3">{{auth()->user()->name ?? null}}</h3>
                         <p class="text-white m-0">Conset elitr erat vero dolor ipsum et diam, eos dolor lorem ipsum,
                             ipsum
                             ipsum sit no ut est. Guber ea ipsum erat kasd amet est elitr ea sit.</p>
