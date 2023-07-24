@@ -7,6 +7,11 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Events\PostCreated;
+use App\Listeners\SendMailUser;
+use App\Listeners\SendNotificationToAdmin;
+
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -14,11 +19,18 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<class-string, array<int, class-string>>
      */
+
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-    ];
+
+        PostCreated::class => [
+            SendMailUser::class,
+            SendNotificationToAdmin::Class
+        ]
+        ];
+
 
     /**
      * Register any events for your application.
