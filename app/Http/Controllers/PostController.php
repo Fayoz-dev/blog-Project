@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
 
@@ -80,6 +81,7 @@ class PostController extends Controller
 
         PostCreated::dispatch($post);
         ChangePost::dispatch($post);
+        Mail::to($request->user())->queue((new \App\Mail\PostCreated($post))->onQueue('sending-mails'));
         return redirect()->route('posts.index');
     }
 
